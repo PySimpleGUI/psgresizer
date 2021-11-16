@@ -57,6 +57,8 @@ To do this, follow these steps:
 This will create a shortcut in the same folder as the target file.  You can safely move this shortcut file to any place you want (like to your desktop).  Double-click the shortcut and your program should launch.
 
 ## Release Notes
+1.4.0   16-Nov-2021
+* Explicitly set the settings filename. I'm still learning about these PyPI .EXE releases. Need to be explicit rather than default  
 
 1.3.1 16-Nov-2021
 * Added correct readme to PyPI Release
