@@ -6,10 +6,10 @@
 
 </p>
 
-Resize your images quickly and easily with this GUI application.  Resizes and encodes to Base64 so that the result can be pasted into your PySimpleGUI program for easy distribution of your applications without the need to distribute image files.
+Convert between formats, resize, and Base64 encode your images quickly and easily with this GUI application.  Resizes and encodes to Base64 so that the result can be pasted into your PySimpleGUI program for easy distribution of your applications without the need to distribute image files.
 
 
-![image](https://user-images.githubusercontent.com/46163555/138754708-baa27092-00c6-45bd-a7cc-4eca64de9eec.png)
+![image](https://raw.githubusercontent.com/PySimpleGUI/psgresizer/main/Screenshots/psgresizer.jpg)
 
 
 
@@ -55,6 +55,17 @@ To do this, follow these steps:
 7. Click "Create Shortcut"
 
 This will create a shortcut in the same folder as the target file.  You can safely move this shortcut file to any place you want (like to your desktop).  Double-click the shortcut and your program should launch.
+
+## Release Notes
+
+1.3.1 16-Nov-2021
+* Added correct readme to PyPI Release
+
+1.3.0 16-Nov-2021
+* Finally getting around to adding release notes
+* Added conversion feature
+* Added version number
+* Added live links to this repo and the PySimpleGUI project at the bottom of the window
 
 
 ## License

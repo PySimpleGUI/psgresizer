@@ -26,12 +26,14 @@ import webbrowser
     Copyright 2021 PySimpleGUI
 """
 
-version = '1.3.0'
+version = '1.3.1'
 __version__ = version.split()[0]
 
 '''
 Change log
     
+    1.3.1   16-Nov-2021
+        Added correct readme to PyPI
     1.3.0   16-Nov-2021
         Fixed bug - MUST always include the icon in the main function for these psg commands
     1.2.0   16-Nov-2021
