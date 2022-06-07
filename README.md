@@ -17,17 +17,17 @@ Convert between formats, resize, and Base64 encode your images quickly and easil
 
 ### Old-school Straight Pip
 
-pip install psgresizer
+`pip install psgresizer`
 
 ### pip via `python -m pip` the python recommended way
 
 #### If `python` is your command
 
-python -m pip install psgresizer
+`python -m pip install psgresizer`
 
 #### If `python3` is your command
 
-python3 -m pip install psgresizer
+`python3 -m pip install psgresizer`
 
 ## Usage
 
@@ -83,7 +83,7 @@ Copyright 2021
 [**The PySimpleGUI Project**](http://www.PySimpleGUI.com)
 
 This program originated from the PySimpleGUI Demo Programs.  You'll find it here: 
-[Demo_Make_Windows_Shortcut](https://github.com/PySimpleGUI/PySimpleGUI/blob/master/DemoPrograms/Demo_Image_Resize_and_Base64_Encode.pyw)  
+[Demo_Image_Resize_and_Base64_Encode.pyw](https://github.com/PySimpleGUI/PySimpleGUI/blob/master/DemoPrograms/Demo_Image_Resize_and_Base64_Encode.pyw)  
 
 Mike from PySimpleGUI.org 
 
@@ -93,4 +93,4 @@ Like the PySimpleGUI project, this project is currently licensed under an open-s
 
 ## Copyright
 
-Copyright 2021 PySimpleGUI
+Copyright 2021, 2022 PySimpleGUI
