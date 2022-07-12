@@ -57,10 +57,16 @@ To do this, follow these steps:
 This will create a shortcut in the same folder as the target file.  You can safely move this shortcut file to any place you want (like to your desktop).  Double-click the shortcut and your program should launch.
 
 ## Release Notes
-1.5.0   10-May-2022
+1.6.0   12-July-2022  
+* Fixed output filename to match the size indicated under the filename.
+
+1.5.4   10-May-2022
+* Had to mess around with the entry point due to setuptools
+
+1.5.0   10-May-2022  
 * Moved icon to bottom of file and called set_global_icon so all windows in this application (including popups) will use this icon  
 
-1.4.0   16-Nov-2021
+1.4.0   16-Nov-2021  
 * Explicitly set the settings filename. I'm still learning about these PyPI .EXE releases. Need to be explicit rather than default  
 
 1.3.1 16-Nov-2021
