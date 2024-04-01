@@ -10,7 +10,7 @@ def readme():
 
 setuptools.setup(
     name="psgresizer",
-    version="5.0.0",
+    version="5.0.1",
     author="PySimpleSoft Inc.",
     install_requires=["PySimpleGUI>=5","Pillow"],
     description="PySimpleGUI  application / utility to resize your images and encode them to Bas64 format.",

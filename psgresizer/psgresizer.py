@@ -16,8 +16,18 @@ import base64
 import io
 import webbrowser
 
-version = '5.0.0'
+version = '5.0.1'
 __version__ = version.split()[0]
+
+
+"""
+Changelog since last major release
+
+5.0.0       Released 3-Mar-2024
+
+5.0.1   When saving as a JPG, must convert from RGBA to RGB or will get a crash
+"""
+
 
 
 """
@@ -181,6 +191,9 @@ def resize(input_file, size, output_file=None, encode_format='PNG'):
     else:
         resized_image = image
 
+    if encode_format.lower() == 'jpeg':
+        resized_image = resized_image.convert("RGB")
+
     if output_file is not None:
         resized_image.save(output_file)
 
@@ -190,6 +203,7 @@ def resize(input_file, size, output_file=None, encode_format='PNG'):
         contents = bio.getvalue()
         encoded = base64.b64encode(contents)
     return encoded
+
 
 
 def main():
