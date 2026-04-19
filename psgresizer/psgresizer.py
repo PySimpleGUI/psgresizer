@@ -1,11 +1,7 @@
 '''
-Copyright 2021-2024 PySimpleSoft, Inc. and/or its licensors. All rights reserved.
+Copyright 2021-2026 PySimpleGUI. All rights reserved.
 
-Redistribution, modification, or any other use of PySimpleGUI or any portion thereof is subject
-to the terms of the PySimpleGUI License Agreement available at https://eula.pysimplegui.com.
-
-You may not redistribute, modify or otherwise use PySimpleGUI or its contents except pursuant
-to the PySimpleGUI License Agreement.
+Licensed under LGPL3
 '''
 
 import PySimpleGUI as sg
@@ -16,7 +12,7 @@ import base64
 import io
 import webbrowser
 
-version = '5.0.1'
+version = '6.0'
 __version__ = version.split()[0]
 
 
@@ -25,7 +21,8 @@ Changelog since last major release
 
 5.0.0       Released 3-Mar-2024
 
-5.0.1   When saving as a JPG, must convert from RGBA to RGB or will get a crash
+5.0.1       When saving as a JPG, must convert from RGBA to RGB or will get a crash
+6.0         License changed to LGPL3         
 """
 
 
@@ -50,143 +47,13 @@ Changelog since last major release
 __version__ = version.split()[0]
 
 
-
-'''
-M""M                     dP            dP dP                   
-M  M                     88            88 88                   
-M  M 88d888b. .d8888b. d8888P .d8888b. 88 88 .d8888b. 88d888b. 
-M  M 88'  `88 Y8ooooo.   88   88'  `88 88 88 88ooood8 88'  `88 
-M  M 88    88       88   88   88.  .88 88 88 88.  ... 88       
-M  M dP    dP `88888P'   dP   `88888P8 dP dP `88888P' dP       
-MMMM
-'''
-
-
-def pip_install_thread(window, sp):
-    window.write_event_value('-THREAD-', (sp, 'Install thread started'))
-    for line in sp.stdout:
-        oline = line.decode().rstrip()
-        window.write_event_value('-THREAD-', (sp, oline))
-
-
-
-def pip_install_latest():
-
-    pip_command = '-m pip install --upgrade --no-cache-dir PySimpleGUI>=5'
-
-    python_command = sys.executable  # always use the currently running interpreter to perform the pip!
-    if 'pythonw' in python_command:
-        python_command = python_command.replace('pythonw', 'python')
-
-    layout = [[sg.Text('Installing PySimpleGUI', font='_ 14')],
-              [sg.Multiline(s=(90, 15), k='-MLINE-', reroute_cprint=True, reroute_stdout=True, echo_stdout_stderr=True, write_only=True, expand_x=True, expand_y=True)],
-              [sg.Push(), sg.Button('Downloading...', k='-EXIT-'), sg.Sizegrip()]]
-
-    window = sg.Window('Pip Install PySimpleGUI Utilities', layout, finalize=True, keep_on_top=True, modal=True, disable_close=True, resizable=True)
-
-    window.disable_debugger()
-
-    sg.cprint('Installing with the Python interpreter =', python_command, c='white on purple')
-
-    sp = sg.execute_command_subprocess(python_command, pip_command, pipe_output=True, wait=False)
-
-    window.start_thread(lambda: pip_install_thread(window, sp), end_key='-THREAD DONE-')
-
-    while True:
-        event, values = window.read()
-        if event == sg.WIN_CLOSED or (event == '-EXIT-' and window['-EXIT-'].ButtonText == 'Done'):
-            break
-        elif event == '-THREAD DONE-':
-            sg.cprint('\n')
-            show_package_version('PySimpleGUI')
-            sg.cprint('Done Installing PySimpleGUI.  Click Done and the program will restart.', c='white on red', font='default 12 italic')
-            window['-EXIT-'].update(text='Done', button_color='white on red')
-        elif event == '-THREAD-':
-            sg.cprint(values['-THREAD-'][1])
-
-    window.close()
-
-def suggest_upgrade_gui():
-    layout = [[sg.Image(sg.EMOJI_BASE64_HAPPY_GASP), sg.Text(f'PySimpleGUI 5+ Required', font='_ 15 bold')],
-              [sg.Text(f'PySimpleGUI 5+ required for this program to function correctly.')],
-              [sg.Text(f'You are running PySimpleGUI {sg.version}')],
-              [sg.Text('Would you like to upgrade to the latest version of PySimpleGUI now?')],
-              [sg.Push(), sg.Button('Upgrade', size=8, k='-UPGRADE-'), sg.Button('Cancel', size=8)]]
-
-    window = sg.Window(title=f'Newer version of PySimpleGUI required', layout=layout, font='_ 12')
-
-    while True:
-        event, values = window.read()
-
-        if event in (sg.WIN_CLOSED, 'Cancel'):
-            window.close()
-            break
-        elif event == '-UPGRADE-':
-            window.close()
-            pip_install_latest()
-            sg.execute_command_subprocess(sys.executable, __file__, pipe_output=True, wait=False)
-            break
-
-
-def make_str_pre_38(package):
-    return f"""
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-import pkg_resources
-try:
-    ver=pkg_resources.get_distribution("{package}").version.rstrip()
-except:
-    ver=' '
-print(ver, end='')
-"""
-
-def make_str(package):
-    return f"""
-import importlib.metadata
-
-try:
-    ver = importlib.metadata.version("{package}")
-except importlib.metadata.PackageNotFoundError:
-    ver = ' '
-print(ver, end='')
-"""
-
-
-def show_package_version(package):
-    """
-    Function that shows all versions of a package
-    """
-    interpreter = sg.execute_py_get_interpreter()
-    sg.cprint(f'{package} upgraded to ', end='', c='red')
-    # print(f'{interpreter}')
-    if sys.version_info.major == 3 and sys.version_info.minor in (6, 7):  # if running Python version 3.6 or 3.7
-        pstr = make_str_pre_38(package)
-    else:
-        pstr = make_str(package)
-    temp_file = os.path.join(os.path.dirname(__file__), 'temp_py.py')
-    with open(temp_file, 'w') as file:
-        file.write(pstr)
-    sg.execute_py_file(temp_file, interpreter_command=interpreter, pipe_output=True, wait=True)
-    os.remove(temp_file)
-
-
-
-def upgrade_check():
-    if not sg.version.startswith('5'):
-        suggest_upgrade_gui()
-        exit()
-
-# ------------------------------- Upgrade Code End -------------------------------
-
-
-
-
 def resize(input_file, size, output_file=None, encode_format='PNG'):
     image = Image.open(input_file)
     width, height = image.size
     new_width, new_height = size
     if new_width != width or new_height != height:  # if the requested size is different than original size
         scale = min(new_height / height, new_width / width)
+        print(f'New size will be: {int(width * scale), int(height * scale)}')
         resized_image = image.resize((int(width * scale), int(height * scale)),  Image.LANCZOS)
     else:
         resized_image = image
@@ -346,7 +213,6 @@ def main():
 def main_entry_point():
 
     sg.user_settings_filename(filename='psgresizer.json')
-    upgrade_check()
 
     image_resize_icon = b'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'
 
