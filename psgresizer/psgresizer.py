@@ -22,7 +22,8 @@ Changelog since last major release
 5.0.0       Released 3-Mar-2024
 
 5.0.1       When saving as a JPG, must convert from RGBA to RGB or will get a crash
-6.0         License changed to LGPL3         
+6.0         License changed to LGPL3   
+            Removed PySimpleGUI.com link from footer      
 """
 
 
@@ -139,14 +140,12 @@ def main():
               [sg.Button('Resize', bind_return_key=True), sg.Button('Exit')],
               [sg.T('Note - on some systems, autoclose cannot be used because the clipboard is cleared by tkinter')],
               [sg.T('Your settings are automatically saved between runs')],
-              [sg.T(f'Version {version}'), sg.T('Go to psgresizer GitHub Repo', font='_ 8', enable_events=True, k='-PSGRESIZER-'),
-               sg.T('A PySimpleGUI Application - Go to PySimpleGUI home', font='_ 8', enable_events=True, k='-PYSIMPLEGUI-')],
+              [sg.T(f'Version {version}'), sg.T('Go to psgresizer GitHub Repo', font='_ 8', enable_events=True, k='-PSGRESIZER-')],
               ]
 
     window = sg.Window('Resize Image', layout, right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT,
                        enable_close_attempted_event=True, finalize=True)
     window['-PSGRESIZER-'].set_cursor('hand1')
-    window['-PYSIMPLEGUI-'].set_cursor('hand1')
     while True:
         event, values = window.read()
         # print(event, values)
@@ -193,8 +192,6 @@ def main():
             sg.execute_editor(__file__)
         elif event == 'File Location':
             sg.popup_scrolled('This Python file is:', __file__)
-        elif event == '-PYSIMPLEGUI-':
-            webbrowser.open_new_tab(r'http://www.PySimpleGUI.com')
         elif event == '-PSGRESIZER-':
             webbrowser.open_new_tab(r'https://github.com/PySimpleGUI/psgresizer')
         elif event in ('-WIDTH-', '-HEIGHT-'):
